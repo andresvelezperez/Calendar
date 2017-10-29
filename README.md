@@ -1,27 +1,10 @@
-java
+Colombia Calendar
 ============
 
-Librerias, ejemplos y apps para ser ejecutadas con java
->
-**Proyectos**
- - H264J
+Esta libreria es la base para la aplicacion movil: Calendario con Festivos
 
-####H264J
 
-Es una copia del proyecto [H264J](https://code.google.com/p/h264j/) que esta en Code Google, bajo Licensia [Artistic License/GPL](http://dev.perl.org/licenses/).
-El proyecto es un "port" de la libreria ffmpeg (libavcodec) para Java. Con una fecha aproximada del Junio 25 de 2012.
->
-**Cambios**
- - El demo es para abrir un archivo, se modifica para recivir un inputStream
- - Se convierte a proyecto maven.
-
-Ejemplo de uso: 
-```
-
-	Usage: com.twilight.h264.player.H264Player <.h264 raw file>
-
-```
-
+Google Play: https://play.google.com/store/apps/details?id=com.avpsoft.calendar
 
 
 ______________________________
