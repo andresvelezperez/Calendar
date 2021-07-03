@@ -17,10 +17,14 @@
 package com.avpsoft.calendar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 /**
  *
@@ -28,74 +32,84 @@ import java.util.Map;
  */
 public final class ColombiaHolidayCalculator {
 
-    private static ColombiaHolidayCalculator colombiaHoliday = new ColombiaHolidayCalculator();
-    private static Map<Integer,List<Holiday>> holidayMap = new HashMap<Integer,List<Holiday>>();
+    private static ColombiaHolidayCalculator colombiaHoliday;// = new ColombiaHolidayCalculator();
+    private static Map<Integer, List<Holiday>> holidayMap = new HashMap<Integer, List<Holiday>>();
+    private final Locale locale;
 
-    protected ColombiaHolidayCalculator() {
-        
+    protected ColombiaHolidayCalculator(Locale locale) {
+        this.locale = locale;
     }
 
-    public static ColombiaHolidayCalculator getInstance() {
+    public static ColombiaHolidayCalculator getInstance(Locale locale) {
+        if (colombiaHoliday == null) {
+            colombiaHoliday = new ColombiaHolidayCalculator(locale);
+        }
         return colombiaHoliday;
     }
-    
-    public List<Holiday> getHolidaysByYear(int year){
+
+    public List<Holiday> getHolidaysByYear(int year) {
         return getHolidays(year);
     }
 
     private List<Holiday> getHolidays(int year) {
 
-        List<Holiday> holidays = new ArrayList<Holiday>();
-        
+        List<Holiday> holidays = new ArrayList<>();
         final Calendar easterDay = Computus.AnonymousGregorianAlgorithm(year);
 
-        holidays.add(new ColombiaHoliday("Día de Año Nuevo", year, Calendar.JANUARY, 1, false) );
-        holidays.add(new ColombiaHoliday("Día de los Reyes Magos", year, Calendar.JANUARY, 6,true));
-        holidays.add(new ColombiaHoliday("San Jose",year, Calendar.MARCH, 19,true));
-        holidays.add(new ColombiaHoliday("Jueves Santo",easterDay, -3,false));
-        holidays.add(new ColombiaHoliday("Viernes Santo",easterDay, -2, false));
-        holidays.add(new ColombiaHoliday("Día del trabajo",year, Calendar.MAY, 1,false));
-        holidays.add(new ColombiaHoliday("Ascensión de Jesús",easterDay,39,true));
-        holidays.add(new ColombiaHoliday("Corpus Christi",easterDay,60,true));
-        holidays.add(new ColombiaHoliday("Sagrado Corazón de Jesús",easterDay,68,true));
-        holidays.add(new ColombiaHoliday("San Pedro y San Pablo",year, Calendar.JUNE, 29,true));
-        holidays.add(new ColombiaHoliday("Grito de Independencia",year, Calendar.JULY, 20,false));
-        holidays.add(new ColombiaHoliday("Batalla de Boyacá",year, Calendar.AUGUST, 7,false));
-        holidays.add(new ColombiaHoliday("Asunción de la Virgen",year, Calendar.AUGUST, 15,true));
-        holidays.add(new ColombiaHoliday("Día de la Raza",year, Calendar.OCTOBER, 12,true));
-        holidays.add(new ColombiaHoliday("Todos los Santos",year, Calendar.NOVEMBER, 1,true));
-        holidays.add(new ColombiaHoliday("Independencia de Cartagena",year, Calendar.NOVEMBER, 11,true));
-        holidays.add(new ColombiaHoliday("Inmaculada Concepción",year, Calendar.DECEMBER, 8,false));
-        holidays.add(new ColombiaHoliday("Navidad (pascua)",year, Calendar.DECEMBER, 25,false));
+        ResourceBundle bundle;
+        try {
+            bundle = ResourceBundle.getBundle("i18nHolidays", locale);
+        } catch (MissingResourceException ignore) {
+            bundle = ResourceBundle.getBundle("i18nHolidays", new Locale("es"));
+        }
+
+        holidays.add(new ColombiaHoliday(bundle.getString("holiday_new_year"), year, Calendar.JANUARY, 1, false));
+        holidays.add(new ColombiaHoliday(bundle.getString("holiday_three_kings"), year, Calendar.JANUARY, 6, true));
+        holidays.add(new ColombiaHoliday(bundle.getString("holiday_saint_joseph"), year, Calendar.MARCH, 19, true));
+        holidays.add(new ColombiaHoliday(bundle.getString("holiday_holy_thursday"), easterDay, -3, false));
+        holidays.add(new ColombiaHoliday(bundle.getString("holiday_holy_friday"), easterDay, -2, false));
+        holidays.add(new ColombiaHoliday(bundle.getString("holiday_labor"), year, Calendar.MAY, 1, false));
+        holidays.add(new ColombiaHoliday(bundle.getString("holiday_ascension_of_jesus"), easterDay, 39, true));
+        holidays.add(new ColombiaHoliday(bundle.getString("holiday_corpus_christi"), easterDay, 60, true));
+        holidays.add(new ColombiaHoliday(bundle.getString("holiday_sacred_heart_of_jesus"), easterDay, 68, true));
+        holidays.add(new ColombiaHoliday(bundle.getString("holiday_saint_peter_and_paul"), year, Calendar.JUNE, 29, true));
+        holidays.add(new ColombiaHoliday(bundle.getString("holiday_cry_of_independence"), year, Calendar.JULY, 20, false));
+        holidays.add(new ColombiaHoliday(bundle.getString("holiday_boyaca_batttle"), year, Calendar.AUGUST, 7, false));
+        holidays.add(new ColombiaHoliday(bundle.getString("holiday_assumptio_of_the_virgin"), year, Calendar.AUGUST, 15, true));
+        holidays.add(new ColombiaHoliday(bundle.getString("holiday_day_of_race"), year, Calendar.OCTOBER, 12, true));
+        holidays.add(new ColombiaHoliday(bundle.getString("holiday_all_saints"), year, Calendar.NOVEMBER, 1, true));
+        holidays.add(new ColombiaHoliday(bundle.getString("holiday_independence_of_cartagena"), year, Calendar.NOVEMBER, 11, true));
+        holidays.add(new ColombiaHoliday(bundle.getString("holiday_immaculate_conception"), year, Calendar.DECEMBER, 8, false));
+        holidays.add(new ColombiaHoliday(bundle.getString("holiday_christmas"), year, Calendar.DECEMBER, 25, false));
 
         return holidays;
     }
-    
-    public static Holiday searchHoliday(Calendar calendar){
-        
+
+    public static Holiday searchHoliday(Calendar calendar, Locale locale) {
+
         List<Holiday> holidaysByYear = null;
         int year = calendar.get(Calendar.YEAR);
-        
-        if(!holidayMap.containsKey(year)){
-            holidaysByYear = getInstance().getHolidaysByYear(year);
+
+        if (!holidayMap.containsKey(year)) {
+            holidaysByYear = getInstance(locale).getHolidaysByYear(year);
             holidayMap.put(year, holidaysByYear);
-        }else{
+        } else {
             holidaysByYear = holidayMap.get(year);
         }
-        
+
         return searchHoliday(calendar, holidaysByYear);
     }
 
-    public static Holiday searchHoliday(Calendar calendar,List<Holiday> holidays){
-        
+    public static Holiday searchHoliday(Calendar calendar, List<Holiday> holidays) {
+
         Calendar clone = (Calendar) calendar.clone();
         clone.set(Calendar.HOUR, 0);
         clone.set(Calendar.MINUTE, 0);
         clone.set(Calendar.SECOND, 0);
         clone.set(Calendar.MILLISECOND, 0);
-        
-        for(Holiday holiday : holidays){
-            if(clone.compareTo(holiday.getHoliday())==0){
+
+        for (Holiday holiday : holidays) {
+            if (clone.compareTo(holiday.getHoliday()) == 0) {
                 return holiday;
             }
         }

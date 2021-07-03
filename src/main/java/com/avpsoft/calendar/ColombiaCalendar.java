@@ -22,37 +22,43 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 /**
+ * Colombia Calendar
  *
  * @author andres
  */
-public class ColombiaCalendar extends GregorianCalendar{
-    
+public class ColombiaCalendar extends GregorianCalendar {
+
     private static final TimeZone colombiaTimezone = TimeZone.getTimeZone("GMT-5:00");
-    private static final Locale colombiaLocale = new Locale("es","co");
+    private final Locale locale;
     private volatile Holiday holiday;
-    
-    public ColombiaCalendar(){
-        super(colombiaTimezone, colombiaLocale);
+
+    public ColombiaCalendar() {
+        this(new Locale("es", "co"));
     }
-    
-    public boolean isHoliday(){
-        
-        this.holiday = ColombiaHolidayCalculator.searchHoliday(this);
-        
+
+    public ColombiaCalendar(Locale locale) {
+        super(colombiaTimezone, locale);
+        this.locale = locale;
+    }
+
+    public boolean isHoliday() {
+
+        this.holiday = ColombiaHolidayCalculator.searchHoliday(this,this.locale);
         return holiday != null;
     }
-    
-    public boolean isSunday(){
-        return get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY;
+
+    public boolean isSunday() {
+
+        return get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
     }
-    
-    public String getHolidayName(){
-        
-        if(this.isHoliday()){
+
+    public String getHolidayName() {
+
+        if (this.isHoliday()) {
             return this.holiday.getHolidayName();
         }
-        
-        return getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, colombiaLocale);
+
+        return getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, locale);
     }
-    
+
 }

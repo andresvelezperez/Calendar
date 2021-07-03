@@ -1,6 +1,6 @@
-com\avpsoft\calendar\ColombiaCalendar.class
 com\avpsoft\calendar\Computus.class
 com\avpsoft\calendar\ColombiaHoliday.class
-com\avpsoft\calendar\Util.class
 com\avpsoft\calendar\ColombiaHolidayCalculator.class
+com\avpsoft\calendar\ColombiaCalendar.class
+com\avpsoft\calendar\Util.class
 com\avpsoft\calendar\Holiday.class
