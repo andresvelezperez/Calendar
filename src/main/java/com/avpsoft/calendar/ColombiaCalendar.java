@@ -28,22 +28,25 @@ import java.util.TimeZone;
  */
 public class ColombiaCalendar extends GregorianCalendar {
 
-    private static final TimeZone colombiaTimezone = TimeZone.getTimeZone("GMT-5:00");
     private final Locale locale;
     private volatile Holiday holiday;
 
     public ColombiaCalendar() {
-        this(new Locale("es", "co"));
+        this(TimeZone.getTimeZone("GMT-5:00"), new Locale("es", "CO"));
     }
 
     public ColombiaCalendar(Locale locale) {
-        super(colombiaTimezone, locale);
+        this(TimeZone.getDefault(), locale);
+    }
+
+    public ColombiaCalendar(TimeZone timeZone, Locale locale) {
+        super(timeZone, locale);
         this.locale = locale;
     }
 
     public boolean isHoliday() {
 
-        this.holiday = ColombiaHolidayCalculator.searchHoliday(this,this.locale);
+        this.holiday = ColombiaHolidayCalculator.searchHoliday(this, this.locale);
         return holiday != null;
     }
 

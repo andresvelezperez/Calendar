@@ -24,14 +24,13 @@ import java.util.Calendar;
  * @author andres
  */
 public class Computus {
-        
+
     /**
-     * Computus (Latin for "computation") is the calculation of the 
-     * date of Easter in terms of, first, the Julian and, later, 
-     * the Gregorian calendar.
-     * 
+     * Computus (Latin for "computation") is the calculation of the date of
+     * Easter in terms of, first, the Julian and, later, the Gregorian calendar.
+     *
      * @see http://en.wikipedia.org/wiki/Computus
-     * 
+     *
      * @param year
      * @return
      */
@@ -54,5 +53,5 @@ public class Computus {
         Calendar calendar = createDefaultCalendar(year, mes - 1, dia);
         return calendar;
     }
-    
+
 }

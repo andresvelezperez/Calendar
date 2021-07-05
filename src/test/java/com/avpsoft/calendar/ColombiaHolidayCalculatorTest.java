@@ -63,4 +63,19 @@ public class ColombiaHolidayCalculatorTest {
         Assert.assertEquals("25 Diciembre", true, calendar.contains(createDefaultCalendar(year, Calendar.DECEMBER, 8)));
     }
 
+    @Test
+    public void Holidayi18nTest() {
+
+        int year = 2012;
+        ColombiaHolidayCalculator colombiaHoliday = new ColombiaHolidayCalculator(new Locale("fr"));
+        List<Holiday> holidays = colombiaHoliday.getHolidaysByYear(year);
+        Holiday holiday = holidays.get(4);
+        Assert.assertEquals("6 Abril", holiday.getHolidayName(), "Viernes Santo");
+        
+        colombiaHoliday = new ColombiaHolidayCalculator(new Locale("en"));
+        holidays = colombiaHoliday.getHolidaysByYear(year);
+        holiday = holidays.get(4);
+        Assert.assertEquals("6 Abril", holiday.getHolidayName(), "Holy Friday");
+    }
+
 }

@@ -23,7 +23,7 @@ import java.util.Calendar;
  * @author andres
  */
 public class Util {
-    
+
     public static Calendar createDefaultCalendar(int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);

@@ -27,5 +27,5 @@ public interface Holiday {
     public Calendar getHoliday();
 
     public String getHolidayName();
-    
+
 }

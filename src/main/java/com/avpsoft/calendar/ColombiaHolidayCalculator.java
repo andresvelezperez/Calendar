@@ -17,7 +17,6 @@
 package com.avpsoft.calendar;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +31,7 @@ import java.util.ResourceBundle;
  */
 public final class ColombiaHolidayCalculator {
 
-    private static ColombiaHolidayCalculator colombiaHoliday;// = new ColombiaHolidayCalculator();
+    private static ColombiaHolidayCalculator colombiaHoliday;
     private static Map<Integer, List<Holiday>> holidayMap = new HashMap<Integer, List<Holiday>>();
     private final Locale locale;
 
